@@ -9,9 +9,9 @@
   "gxDependencies": [
     {
       "author": "whyrusleeping",
-      "hash": "QmTdFbYjY9j9S2zT7DCDnQewxFWvEjXyYMb4rH1wS4kFmg",
+      "hash": "QmSNJRX4uphb3Eyp69uYbpRVvgqjPxfjnJmjcdMWkDH5Pn",
       "name": "go-libp2p",
-      "version": "4.3.6"
+      "version": "4.3.9"
     }
   ],
   "gxVersion": "0.10.0",
