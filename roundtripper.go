@@ -7,6 +7,8 @@ import (
 	host "github.com/libp2p/go-libp2p-host"
 )
 
+// RoundTripper implemenets http.RoundTrip and can be used as
+// custom transport with Go http.Client.
 type RoundTripper struct {
 	h host.Host
 }
