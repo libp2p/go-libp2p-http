@@ -9,7 +9,7 @@
 
 Package `p2phttp` allows to serve HTTP endpoints and make HTTP requests through [LibP2P](https://github.com/libp2p/libp2p) using Go's standard "http" and "net" stack.
 
-Instead of the regular "host:port" addressing, `p2phttp` uses a Peer ID instead and lets LibP2P take care of the routing, thus taking advantage of features like multi-routes,  NAT transversal and stream multiplexing over a single connection.
+Instead of the regular "host:port" addressing, `p2phttp` uses a Peer ID and lets LibP2P take care of the routing, thus taking advantage of features like multi-routes,  NAT transversal and stream multiplexing over a single connection.
 
 ## Table of Contents
 
@@ -20,7 +20,7 @@ Instead of the regular "host:port" addressing, `p2phttp` uses a Peer ID instead 
 
 ## Install
 
-This package uses [`gx`](https://github.com/whyrusleeping/gx-go) for dependencies and should imported with `gx` on other projects:
+This package uses [`gx`](https://github.com/whyrusleeping/gx-go) for dependencies and should be imported with `gx` on other projects:
 
 ```
 $ gx import github.com/hsanjuan/go-libp2p-http

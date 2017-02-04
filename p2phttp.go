@@ -3,7 +3,7 @@
 // "net" stacks.
 //
 // Instead of the regular "host:port" addressing, `p2phttp` uses a Peer ID
-// instead and lets LibP2P take care of the routing, thus taking advantage
+// and lets LibP2P take care of the routing, thus taking advantage
 // of features like multi-routes,  NAT transversal and stream multiplexing
 // over a single connection.
 //
@@ -33,11 +33,11 @@
 //	tr := &http.Transport{}
 //	tr.RegisterProtocol("libp2p", p2phttp.NewTransport(clientHost))
 //	client := &http.Client{Transport: tr}
-//      res, err := client.Get("libp2p://Qmaoi4isbcTbFfohQyn28EiYM5CDWQx9QRCjDh3CTeiY7P/hello")
-//      ...
+//	res, err := client.Get("libp2p://Qmaoi4isbcTbFfohQyn28EiYM5CDWQx9QRCjDh3CTeiY7P/hello")
+//	...
 //
-// In the example above, the client registers a "libp2p" for which the custom
-// transport is used. It can still perform regular "http" requests. The
+// In the example above, the client registers a "libp2p" protocol for which the
+// custom transport is used. It can still perform regular "http" requests. The
 // protocol name used is arbitraty and non standard.
 //
 // Note that LibP2P hosts cannot dial to themselves, so there is no possibility
