@@ -25,7 +25,7 @@ func (rt *RoundTripper) RoundTrip(r *http.Request) (*http.Response, error) {
 		addr = r.URL.Host
 	}
 
-	conn, err := Dial(rt.h, r.URL.Host)
+	conn, err := Dial(rt.h, addr)
 	if err != nil {
 		return nil, err
 	}
