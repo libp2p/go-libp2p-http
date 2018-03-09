@@ -1,6 +1,7 @@
 package p2phttp
 
 import (
+	"bytes"
 	"context"
 	"fmt"
 	"io/ioutil"
@@ -72,7 +73,14 @@ func TestServerClient(t *testing.T) {
 
 	go func() {
 		http.HandleFunc("/hello", func(w http.ResponseWriter, r *http.Request) {
-			w.Write([]byte("Hi!"))
+			defer r.Body.Close()
+			body, err := ioutil.ReadAll(r.Body)
+			if err != nil {
+				http.Error(w, err.Error(), 500)
+				return
+			}
+			resp := fmt.Sprintf("Hi %s!", body)
+			w.Write([]byte(resp))
 		})
 		server := &http.Server{}
 		server.Serve(listener)
@@ -81,7 +89,9 @@ func TestServerClient(t *testing.T) {
 	tr := &http.Transport{}
 	tr.RegisterProtocol("libp2p", NewTransport(clientHost))
 	client := &http.Client{Transport: tr}
-	res, err := client.Get(fmt.Sprintf("libp2p://%s/hello", srvHost.ID().Pretty()))
+
+	buf := bytes.NewBufferString("Hector")
+	res, err := client.Post(fmt.Sprintf("libp2p://%s/hello", srvHost.ID().Pretty()), "text/plain", buf)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -90,7 +100,9 @@ func TestServerClient(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if string(text) != "Hi!" {
-		t.Errorf("expected Hi! but got %s", text)
+	if string(text) != "Hi Hector!" {
+		t.Errorf("expected Hi Hector! but got %s", text)
 	}
+
+	t.Log(string(text))
 }
