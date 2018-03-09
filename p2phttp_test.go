@@ -1,12 +1,14 @@
 package p2phttp
 
 import (
+	"bytes"
 	"context"
 	"fmt"
 	"io/ioutil"
 	"net/http"
 	"testing"
 
+	gostream "github.com/hsanjuan/go-libp2p-gostream"
 	crypto "github.com/libp2p/go-libp2p-crypto"
 	host "github.com/libp2p/go-libp2p-host"
 	peer "github.com/libp2p/go-libp2p-peer"
@@ -63,7 +65,7 @@ func TestServerClient(t *testing.T) {
 	srvHost.Peerstore().AddAddrs(clientHost.ID(), clientHost.Addrs(), peerstore.PermanentAddrTTL)
 	clientHost.Peerstore().AddAddrs(srvHost.ID(), srvHost.Addrs(), peerstore.PermanentAddrTTL)
 
-	listener, err := Listen(srvHost)
+	listener, err := gostream.Listen(srvHost, P2PProtocol)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -71,7 +73,14 @@ func TestServerClient(t *testing.T) {
 
 	go func() {
 		http.HandleFunc("/hello", func(w http.ResponseWriter, r *http.Request) {
-			w.Write([]byte("Hi!"))
+			defer r.Body.Close()
+			body, err := ioutil.ReadAll(r.Body)
+			if err != nil {
+				http.Error(w, err.Error(), 500)
+				return
+			}
+			resp := fmt.Sprintf("Hi %s!", body)
+			w.Write([]byte(resp))
 		})
 		server := &http.Server{}
 		server.Serve(listener)
@@ -80,7 +89,9 @@ func TestServerClient(t *testing.T) {
 	tr := &http.Transport{}
 	tr.RegisterProtocol("libp2p", NewTransport(clientHost))
 	client := &http.Client{Transport: tr}
-	res, err := client.Get(fmt.Sprintf("libp2p://%s/hello", srvHost.ID().Pretty()))
+
+	buf := bytes.NewBufferString("Hector")
+	res, err := client.Post(fmt.Sprintf("libp2p://%s/hello", srvHost.ID().Pretty()), "text/plain", buf)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -89,7 +100,9 @@ func TestServerClient(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if string(text) != "Hi!" {
-		t.Errorf("expected Hi! but got %s", text)
+	if string(text) != "Hi Hector!" {
+		t.Errorf("expected Hi Hector! but got %s", text)
 	}
+
+	t.Log(string(text))
 }
