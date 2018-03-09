@@ -9,9 +9,15 @@
   "gxDependencies": [
     {
       "author": "whyrusleeping",
-      "hash": "QmSNJRX4uphb3Eyp69uYbpRVvgqjPxfjnJmjcdMWkDH5Pn",
+      "hash": "QmPd5qhppUqewTQMfStvNNCFtcxiWGsnE6Vs3va6788gsX",
       "name": "go-libp2p",
-      "version": "4.3.9"
+      "version": "5.0.12"
+    },
+    {
+      "author": "hsanjuan",
+      "hash": "QmP5BSbnFhzikJsQQ5pDVss3MtEpr31RcJEWgNxF1ut8qh",
+      "name": "go-libp2p-gostream",
+      "version": "0.0.4"
     }
   ],
   "gxVersion": "0.10.0",

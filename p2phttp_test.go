@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"testing"
 
+	gostream "github.com/hsanjuan/go-libp2p-gostream"
 	crypto "github.com/libp2p/go-libp2p-crypto"
 	host "github.com/libp2p/go-libp2p-host"
 	peer "github.com/libp2p/go-libp2p-peer"
@@ -63,7 +64,7 @@ func TestServerClient(t *testing.T) {
 	srvHost.Peerstore().AddAddrs(clientHost.ID(), clientHost.Addrs(), peerstore.PermanentAddrTTL)
 	clientHost.Peerstore().AddAddrs(srvHost.ID(), srvHost.Addrs(), peerstore.PermanentAddrTTL)
 
-	listener, err := Listen(srvHost)
+	listener, err := gostream.Listen(srvHost, P2PProtocol)
 	if err != nil {
 		t.Fatal(err)
 	}

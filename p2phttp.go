@@ -44,12 +44,68 @@
 // of using the same host as server and as client.
 package p2phttp
 
-import protocol "github.com/libp2p/go-libp2p-protocol"
+import (
+	"bufio"
+	"net/http"
+
+	gostream "github.com/hsanjuan/go-libp2p-gostream"
+	host "github.com/libp2p/go-libp2p-host"
+	peer "github.com/libp2p/go-libp2p-peer"
+	protocol "github.com/libp2p/go-libp2p-protocol"
+)
 
 // P2PProtocol is used to tag and identify streams
 // handled by go-libp2p-http
 var P2PProtocol protocol.ID = "/libp2p-http"
 
-// Network is the name identifying the network to which
-// go-libp2p-http addresses belong.
-var Network = "p2p"
+// RoundTripper implemenets http.RoundTrip and can be used as
+// custom transport with Go http.Client.
+type RoundTripper struct {
+	h host.Host
+}
+
+// RoundTrip executes a single HTTP transaction, returning
+// a Response for the provided Request.
+func (rt *RoundTripper) RoundTrip(r *http.Request) (*http.Response, error) {
+	if r.Body != nil {
+		defer r.Body.Close()
+	}
+
+	addr := r.Host
+	if addr == "" {
+		addr = r.URL.Host
+	}
+
+	pid, err := peer.IDB58Decode(addr)
+	if err != nil {
+		return nil, err
+	}
+
+	conn, err := gostream.Dial(rt.h, peer.ID(pid), P2PProtocol)
+	if err != nil {
+		return nil, err
+	}
+	defer conn.Close()
+
+	err = r.Write(conn)
+	if err != nil {
+		return nil, err
+	}
+
+	reader := bufio.NewReader(conn)
+	return http.ReadResponse(reader, r)
+}
+
+// NewTransport returns a new RoundTripper which uses the provided
+// libP2P host to perform an http request and obtain the response.
+//
+// The typical use case for NewTransport is to register the "libp2p"
+// protocol with a Transport, as in:
+//     t := &http.Transport{}
+//     t.RegisterProtocol("libp2p", p2phttp.NewTransport(host))
+//     c := &http.Client{Transport: t}
+//     res, err := c.Get("libp2p://Qmaoi4isbcTbFfohQyn28EiYM5CDWQx9QRCjDh3CTeiY7P/index.html")
+//     ...
+func NewTransport(h host.Host) *RoundTripper {
+	return &RoundTripper{h}
+}
