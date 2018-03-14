@@ -41,7 +41,7 @@ Full documentation can be read at [Godoc](https://godoc.org/github.com/hsanjuan/
 A simple http.Server on LibP2P works as:
 
 ```go
-listener, _ := p2phttp.Listen(host1)
+listener, _ := gostream.Listen(host1, p2phttp.P2PProtocol)
 defer listener.Close()
 go func() {
 	http.HandleFunc("/hello", func(w http.ResponseWriter, r *http.Request) {
@@ -51,6 +51,9 @@ go func() {
 	server.Serve(listener)
 }
 ```
+
+The listener is provided by https://github.com/hsanjuan/go-libp2p-gostream .
+
 A client just needs to be initialized with a custom LibP2P host-based transport to perform requests to such server:
 
 ```go
