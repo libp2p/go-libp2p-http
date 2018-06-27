@@ -9,49 +9,23 @@ import (
 	"testing"
 
 	gostream "github.com/hsanjuan/go-libp2p-gostream"
-	crypto "github.com/libp2p/go-libp2p-crypto"
+	libp2p "github.com/libp2p/go-libp2p"
 	host "github.com/libp2p/go-libp2p-host"
-	peer "github.com/libp2p/go-libp2p-peer"
 	peerstore "github.com/libp2p/go-libp2p-peerstore"
-	swarm "github.com/libp2p/go-libp2p-swarm"
-	bhost "github.com/libp2p/go-libp2p/p2p/host/basic"
 	multiaddr "github.com/multiformats/go-multiaddr"
 )
 
 // newHost illustrates how to build a libp2p host with secio using
 // a randomly generated key-pair
 func newHost(t *testing.T, listen multiaddr.Multiaddr) host.Host {
-	priv, pub, err := crypto.GenerateKeyPair(crypto.RSA, 2048)
-	if err != nil {
-		t.Fatal(err)
-	}
-	pid, err := peer.IDFromPublicKey(pub)
-	if err != nil {
-		t.Fatal(err)
-	}
-	ps := peerstore.NewPeerstore()
-	err = ps.AddPubKey(pid, pub)
-	if err != nil {
-		t.Fatal(err)
-	}
-	err = ps.AddPrivKey(pid, priv)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	network, err := swarm.NewNetwork(
+	h, err := libp2p.New(
 		context.Background(),
-		[]multiaddr.Multiaddr{listen},
-		pid,
-		ps,
-		nil)
-
+		libp2p.ListenAddrs(listen),
+	)
 	if err != nil {
 		t.Fatal(err)
 	}
-
-	host := bhost.New(network)
-	return host
+	return h
 }
 
 func TestServerClient(t *testing.T) {
