@@ -39,7 +39,7 @@ func TestServerClient(t *testing.T) {
 	srvHost.Peerstore().AddAddrs(clientHost.ID(), clientHost.Addrs(), peerstore.PermanentAddrTTL)
 	clientHost.Peerstore().AddAddrs(srvHost.ID(), srvHost.Addrs(), peerstore.PermanentAddrTTL)
 
-	listener, err := gostream.Listen(srvHost, P2PProtocol)
+	listener, err := gostream.Listen(srvHost, "/testiti-test")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -61,7 +61,7 @@ func TestServerClient(t *testing.T) {
 	}()
 
 	tr := &http.Transport{}
-	tr.RegisterProtocol("libp2p", NewTransport(clientHost))
+	tr.RegisterProtocol("libp2p", NewTransport(clientHost, ProtocolOption("/testiti-test")))
 	client := &http.Client{Transport: tr}
 
 	buf := bytes.NewBufferString("Hector")
