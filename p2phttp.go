@@ -52,9 +52,10 @@ import (
 	"net/http"
 
 	gostream "github.com/hsanjuan/go-libp2p-gostream"
-	host "github.com/libp2p/go-libp2p-host"
-	peer "github.com/libp2p/go-libp2p-peer"
-	protocol "github.com/libp2p/go-libp2p-protocol"
+
+	"github.com/libp2p/go-libp2p-core/host"
+	"github.com/libp2p/go-libp2p-core/peer"
+	"github.com/libp2p/go-libp2p-core/protocol"
 )
 
 // DefaultP2PProtocol is used to tag and identify streams

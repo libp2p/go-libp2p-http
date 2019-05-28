@@ -9,9 +9,10 @@ import (
 	"testing"
 
 	gostream "github.com/hsanjuan/go-libp2p-gostream"
-	libp2p "github.com/libp2p/go-libp2p"
-	host "github.com/libp2p/go-libp2p-host"
-	peerstore "github.com/libp2p/go-libp2p-peerstore"
+
+	"github.com/libp2p/go-libp2p"
+	"github.com/libp2p/go-libp2p-core/host"
+	"github.com/libp2p/go-libp2p-core/peerstore"
 	multiaddr "github.com/multiformats/go-multiaddr"
 )
 
