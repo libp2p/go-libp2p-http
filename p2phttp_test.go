@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"testing"
 
-	gostream "github.com/hsanjuan/go-libp2p-gostream"
+	gostream "github.com/libp2p/go-libp2p-gostream"
 
 	"github.com/libp2p/go-libp2p"
 	"github.com/libp2p/go-libp2p-core/host"

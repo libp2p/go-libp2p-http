@@ -1,15 +1,15 @@
 # go-libp2p-http
 
-[![Build Status](https://travis-ci.org/hsanjuan/go-libp2p-http.svg?branch=master)](https://travis-ci.org/hsanjuan/go-libp2p-http)
-[![codecov](https://codecov.io/gh/hsanjuan/go-libp2p-http/branch/master/graph/badge.svg)](https://codecov.io/gh/hsanjuan/go-libp2p-http)
+[![Build Status](https://travis-ci.org/libp2p/go-libp2p-http.svg?branch=master)](https://travis-ci.org/libp2p/go-libp2p-http)
+[![codecov](https://codecov.io/gh/libp2p/go-libp2p-http/branch/master/graph/badge.svg)](https://codecov.io/gh/libp2p/go-libp2p-http)
 [![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg)](https://github.com/RichardLitt/standard-readme)
 
 
-> HTTP on top of LibP2P
+> HTTP on top of libp2p
 
-Package `p2phttp` allows to serve HTTP endpoints and make HTTP requests through [LibP2P](https://github.com/libp2p/libp2p) using Go's standard "http" and "net" stack.
+Package `p2phttp` allows to serve HTTP endpoints and make HTTP requests through [libp2p](https://github.com/libp2p/libp2p) using Go's standard "http" and "net" stack.
 
-Instead of the regular "host:port" addressing, `p2phttp` uses a Peer ID and lets LibP2P take care of the routing, thus taking advantage of features like multi-routes,  NAT transversal and stream multiplexing over a single connection.
+Instead of the regular "host:port" addressing, `p2phttp` uses a Peer ID and lets libp2p take care of the routing, thus taking advantage of features like multi-routes,  NAT transversal and stream multiplexing over a single connection.
 
 ## Table of Contents
 
@@ -20,25 +20,13 @@ Instead of the regular "host:port" addressing, `p2phttp` uses a Peer ID and lets
 
 ## Install
 
-This package uses [`gx`](https://github.com/whyrusleeping/gx-go) for dependencies and should be imported with `gx` on other projects:
-
-```
-$ gx import github.com/hsanjuan/go-libp2p-http
-```
-
-The code can be downloaded and tested with:
-
-```
-$ go get -u -d github.com/hsanjuan/go-libp2p-http
-$ cd $GOPATH/src/github.com/hsanjuan/go-libp2p-http
-$ make test
-```
+This package is a library that uses Go modules for dependency management.
 
 ## Usage
 
-Full documentation can be read at [Godoc](https://godoc.org/github.com/hsanjuan/go-libp2p-http). The important bits follow.
+Full documentation can be read at [Godoc](https://godoc.org/github.com/libp2p/go-libp2p-http). The important bits follow.
 
-A simple http.Server on LibP2P works as:
+A simple `http.Server` on libp2p works as:
 
 ```go
 listener, _ := gostream.Listen(host1, p2phttp.P2PProtocol)
@@ -52,9 +40,9 @@ go func() {
 }
 ```
 
-The listener is provided by https://github.com/hsanjuan/go-libp2p-gostream .
+The listener is provided by https://github.com/libp2p/go-libp2p-gostream .
 
-A client just needs to be initialized with a custom LibP2P host-based transport to perform requests to such server:
+A client just needs to be initialized with a custom libp2p host-based transport to perform requests to such server:
 
 ```go
 tr := &http.Transport{}
@@ -69,4 +57,4 @@ PRs accepted.
 
 ## License
 
-MIT © Hector Sanjuan
+MIT © Protocol Labs, Inc.
