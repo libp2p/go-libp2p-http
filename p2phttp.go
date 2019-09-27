@@ -131,7 +131,7 @@ func (rt *RoundTripper) RoundTrip(r *http.Request) (*http.Response, error) {
 		return nil, err
 	}
 
-	conn, err := gostream.Dial(rt.h, peer.ID(pid), rt.opts.Protocol)
+	conn, err := gostream.Dial(r.Context(), rt.h, peer.ID(pid), rt.opts.Protocol)
 	if err != nil {
 		if r.Body != nil {
 			r.Body.Close()
