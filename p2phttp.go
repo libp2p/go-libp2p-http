@@ -13,7 +13,7 @@
 //
 // For example, a simple http.Server on LibP2P works as:
 //
-//	listener, _ := gostream.Listen(host1, p2phttp.P2PProtocol)
+//	listener, _ := gostream.Listen(host1, p2phttp.DefaultP2PProtocol)
 //	defer listener.Close()
 //	go func() {
 //		http.HandleFunc("/hello", func(w http.ResponseWriter, r *http.Request) {
