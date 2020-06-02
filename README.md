@@ -29,7 +29,7 @@ Full documentation can be read at [Godoc](https://godoc.org/github.com/libp2p/go
 A simple `http.Server` on libp2p works as:
 
 ```go
-listener, _ := gostream.Listen(host1, p2phttp.P2PProtocol)
+listener, _ := gostream.Listen(host1, p2phttp.DefaultP2PProtocol)
 defer listener.Close()
 go func() {
 	http.HandleFunc("/hello", func(w http.ResponseWriter, r *http.Request) {
