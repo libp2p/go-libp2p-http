@@ -51,6 +51,7 @@ import (
 	"net"
 	"net/http"
 
+	"github.com/libp2p/go-libp2p-core/network"
 	gostream "github.com/libp2p/go-libp2p-gostream"
 
 	"github.com/libp2p/go-libp2p-core/host"
@@ -150,7 +151,7 @@ func (rt *RoundTripper) RoundTrip(r *http.Request) (*http.Response, error) {
 		}
 	}()
 
-	resp, err := http.ReadResponse(bufio.NewReader(conn), r)
+	resp, err := http.ReadResponse(bufio.NewReaderSize(conn, network.MessageSizeMax), r)
 	if err != nil {
 		return resp, err
 	}
