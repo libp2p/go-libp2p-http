@@ -126,7 +126,7 @@ func (rt *RoundTripper) RoundTrip(r *http.Request) (*http.Response, error) {
 		addr = r.URL.Host
 	}
 
-	pid, err := peer.IDB58Decode(addr)
+	pid, err := peer.Decode(addr)
 	if err != nil {
 		return nil, err
 	}
