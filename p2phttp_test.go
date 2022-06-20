@@ -2,7 +2,6 @@ package p2phttp
 
 import (
 	"bytes"
-	"context"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -20,7 +19,6 @@ import (
 // a randomly generated key-pair
 func newHost(t *testing.T, listen multiaddr.Multiaddr) host.Host {
 	h, err := libp2p.New(
-		context.Background(),
 		libp2p.ListenAddrs(listen),
 	)
 	if err != nil {
