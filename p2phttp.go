@@ -13,16 +13,16 @@
 //
 // For example, a simple http.Server on LibP2P works as:
 //
-//	listener, _ := gostream.Listen(host1, p2phttp.DefaultP2PProtocol)
-//	defer listener.Close()
-//	go func() {
-//		http.HandleFunc("/hello", func(w http.ResponseWriter, r *http.Request) {
-//			w.Write([]byte("Hi!"))
-//		})
-//		server := &http.Server{}
-//		server.Serve(listener)
-//	}
-//      ...
+//		listener, _ := gostream.Listen(host1, p2phttp.DefaultP2PProtocol)
+//		defer listener.Close()
+//		go func() {
+//			http.HandleFunc("/hello", func(w http.ResponseWriter, r *http.Request) {
+//				w.Write([]byte("Hi!"))
+//			})
+//			server := &http.Server{}
+//			server.Serve(listener)
+//		}
+//	     ...
 //
 // As shown above, a Server only needs a
 // "github.com/libp2p/go-libp2p-gostream" listener. This listener will
@@ -89,11 +89,12 @@ type RoundTripper struct {
 //
 // The typical use case for NewTransport is to register the "libp2p"
 // protocol with a Transport, as in:
-//     t := &http.Transport{}
-//     t.RegisterProtocol("libp2p", p2phttp.NewTransport(host, ProtocolOption(DefaultP2PProtocol)))
-//     c := &http.Client{Transport: t}
-//     res, err := c.Get("libp2p://Qmaoi4isbcTbFfohQyn28EiYM5CDWQx9QRCjDh3CTeiY7P/index.html")
-//     ...
+//
+//	t := &http.Transport{}
+//	t.RegisterProtocol("libp2p", p2phttp.NewTransport(host, ProtocolOption(DefaultP2PProtocol)))
+//	c := &http.Client{Transport: t}
+//	res, err := c.Get("libp2p://Qmaoi4isbcTbFfohQyn28EiYM5CDWQx9QRCjDh3CTeiY7P/index.html")
+//	...
 func NewTransport(h host.Host, opts ...Option) *RoundTripper {
 	defOpts := options{
 		Protocol: DefaultP2PProtocol,

@@ -3,7 +3,7 @@ package p2phttp
 import (
 	"bytes"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"testing"
 
@@ -47,7 +47,7 @@ func TestServerClient(t *testing.T) {
 	go func() {
 		http.HandleFunc("/hello", func(w http.ResponseWriter, r *http.Request) {
 			defer r.Body.Close()
-			body, err := ioutil.ReadAll(r.Body)
+			body, err := io.ReadAll(r.Body)
 			if err != nil {
 				http.Error(w, err.Error(), 500)
 				return
@@ -69,7 +69,7 @@ func TestServerClient(t *testing.T) {
 		t.Fatal(err)
 	}
 	defer res.Body.Close()
-	text, err := ioutil.ReadAll(res.Body)
+	text, err := io.ReadAll(res.Body)
 	if err != nil {
 		t.Fatal(err)
 	}
