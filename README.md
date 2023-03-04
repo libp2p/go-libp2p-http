@@ -37,7 +37,7 @@ go func() {
 	})
 	server := &http.Server{}
 	server.Serve(listener)
-}
+}()
 ```
 
 The listener is provided by https://github.com/libp2p/go-libp2p-gostream .
