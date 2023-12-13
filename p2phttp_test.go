@@ -64,7 +64,7 @@ func TestServerClient(t *testing.T) {
 	client := &http.Client{Transport: tr}
 
 	buf := bytes.NewBufferString("Hector")
-	res, err := client.Post(fmt.Sprintf("libp2p://%s/hello", srvHost.ID().Pretty()), "text/plain", buf)
+	res, err := client.Post(fmt.Sprintf("libp2p://%s/hello", srvHost.ID().String()), "text/plain", buf)
 	if err != nil {
 		t.Fatal(err)
 	}
