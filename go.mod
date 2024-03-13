@@ -2,7 +2,6 @@ module github.com/libp2p/go-libp2p-http
 
 go 1.21
 
-
 require (
 	github.com/libp2p/go-libp2p v0.30.0
 	github.com/libp2p/go-libp2p-gostream v0.6.0
