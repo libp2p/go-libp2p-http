@@ -1,6 +1,6 @@
 module github.com/libp2p/go-libp2p-http
 
-go 1.22
+go 1.23
 
 require (
 	github.com/libp2p/go-libp2p v0.30.0
