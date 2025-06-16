@@ -139,6 +139,9 @@ func (rt *RoundTripper) RoundTrip(r *http.Request) (*http.Response, error) {
 		}
 		return nil, err
 	}
+	if d, ok := r.Context().Deadline(); ok {
+		conn.SetDeadline(d)
+	}
 
 	// Write the request while reading the response
 	go func() {
